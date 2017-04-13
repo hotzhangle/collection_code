@@ -1,0 +1,62 @@
+[user]
+
+    name = zhangle
+
+    email = zhangle@huaqin.com
+
+[color]
+
+    ui = auto
+
+    status = auto
+
+	branch = auto
+
+	interactive = auto
+
+	diff = auto
+
+[core]
+
+	editor = vim
+
+[review "diana.devops.letv.com"]
+
+	username = zhangle_w
+
+[review "gerrit.huaqin.com:8081"]
+
+	username = 22003304
+
+[diff]
+
+    tool = bc3
+
+[difftool "bc3"]
+
+    cmd = /usr/bin/bcompare \"$LOCAL\" \"$REMOTE\"
+
+[difftool]
+
+    prompt = false
+
+[merge]
+
+    tool = bc3
+
+[mergetool "bc3"]
+
+    cmd = /usr/bin/bcompare \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+
+    trustExitCode = true
+
+[alias]
+
+	lg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+[branch "master"]
+
+	remote = origin
+
+	merge = refs/heads/master
+
