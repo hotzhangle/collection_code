@@ -1,16 +1,11 @@
-" =========================================================================
-" Last Change: 2016年09月22日 15时13分
-" Version: 1.80
-" =========================================================================
-
 set nocompatible " 关闭 vi 兼容模式
 filetype off
 syntax on "	auto syntax on
 syntax enable "open syntax highlight
 "=======for add plugin youcompleteme=========
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Plugin 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'OnSyntaxChange'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
@@ -35,28 +30,8 @@ Bundle 'FencView.vim'
 Bundle 'The-NERD-tree'
 Bundle 'The-NERD-Commenter'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+call vundle#end()
 filetype plugin indent on "require
-Bundle 'Valloric/YouCompleteMe'
-" To ignore plugin indent changes, instead use:filetype plugin on Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh
-" cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-" see :h vundle for more details or wiki for FAQ  NOTE: comments after Plugin commands are not allowed  Put your stuff after this line
-let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-"=======for add plugin youcompleteme=========
-" 随 vim 自启动
-let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-let g:indent_guides_start_level=2
-" 色块宽度
-let g:indent_guides_guide_size=1
-" 快捷键 i 开/关缩进可视化
-
 set undofile
 "Set to auto read when a file is changed from the outside
 if exists("&autoread")
@@ -64,12 +39,10 @@ if exists("&autoread")
 endif
 "Have the mouse enable all the time:
 set mouse=v
-
-
 set t_Co=256 "set terminal support 256 colors
-set background=light
-colorscheme molokai " 设定配色方案
-"colorscheme solarized
+set background=dark
+"colorscheme molokai " 设定配色方案
+colorscheme solarized
 "colorscheme phd
 set number " 显示行号
 set showcmd "命令行显示输入的命令
@@ -117,7 +90,6 @@ setlocal foldlevel=1 " 设置折叠层数为1
 set viminfo+=! " save global viraberant
 " set foldclose=all " 设置为自动关闭折叠
 command W w !sudo tee % > /dev/null  " :W sudo saves the file (useful for handling the permission-denied)
-
 " --------------mapping-----------------------------
 "Set mapleader set mapleader must be ahead of all mapping action
 let mapleader = ";"
@@ -132,34 +104,15 @@ nmap <leader>p : set paste<CR>
 nmap <leader>pp :set nopaste<CR>
 map <silent> <leader><cr> :noh<cr>
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-" snippets expand key
-imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
-imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
-
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-nnoremap <leader>jd :YcmCompleter GoToDeclaration<CR>
-nnoremap <Leader>sp :CtrlSF<CR>
-" 只能是 #include 或已打开的文件
-nnoremap <leader>je :YcmCompleter GoToDefinition<CR>
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
 " Tab操作快捷方式!
 nnoremap <C-TAB> :tabnext<CR>
 nnoremap <C-S-TAB> :tabprev<CR>
-
 "关于tab的快捷键
  map tn :tabnext<cr>
  map tp :tabprevious<cr>
  map td :tabnew .<cr>
  map te :tabedit
- map tc :tabclose<cr>
-
-" F6 BufExplorer Buffers操作快捷方式!
-map <F6> :BufExplorer<CR>
-nnoremap <C-RETURN> :bnext<CR>
-nnoremap <C-S-RETURN> :bprevious<CR>
-"-----------------------------------------------------------------
+map tc :tabclose<cr>
 " F3 NERDTree 切换
 map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC>:NERDTreeToggle<CR>
@@ -175,7 +128,6 @@ nnoremap <leader>1 :set filetype=xhtml<CR>
 nnoremap <leader>2 :set filetype=css<CR>
 nnoremap <leader>3 :set filetype=javascript<CR>
 nnoremap <leader>4 :set filetype=php<CR>
-
 " 选中状态下 Ctrl+c 复制
 vmap <C-c> "+y
 map <leader>da :DoxAuthor<CR>
@@ -185,7 +137,6 @@ map <leader>dc a /* */<LEFT><LEFT><LEFT>
 set fileformats=unix,dos,mac
 " nmap <leader>fd :se fileformat=dos<CR>
 " nmap <leader>fu :se fileformat=unix<CR>
-
 " use Ctrl+[l|n|p|cc] to list|next|previous|jump to count the result
  map <C-x>l <ESC>:cl<CR>
  map <C-x>n <ESC>:cn<CR>
@@ -193,7 +144,6 @@ set fileformats=unix,dos,mac
  map <C-x>c <ESC>:cc<CR>
  "[% 定位块首 ]% 定位块尾
 " --------------mapping-----------------------------
-
 "Enable filetype plugin
 if has("eval") && v:version>=600
 	filetype plugin on
@@ -204,7 +154,6 @@ highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 highlight StatusLine guifg=SlateBlue guibg=Yellow
 highlight StatusLineNC guifg=Gray guibg=White
-
 "Visual mode pressing * or # searches for the current selection Super useful!From an idea by Michael Naumann " return OS type, eg: windows, or linux, mac, et.st..
 function! MySys()
 if has("win16") || has("win32") || has("win64") || has("win95")
@@ -213,22 +162,18 @@ elseif has("unix")
 return "linux"
 endif
 endfunction
-
 " 用户目录变量$VIMFILES
 if MySys() == "windows"
 let $VIMFILES = $VIM.'/vimfiles'
 elseif MySys() == "linux"
 let $VIMFILES = $HOME.'/.vim'
 endif
-
 " 设定doc文档目录
 let helptags=$VIMFILES.'/doc'
-
 " 设置字体 以及中文支持
 if has("win32")
 set guifont=Inconsolata:h12:cANSI
 endif
-
 " 配置多语言环境
 if has("multi_byte")
 " UTF-8 编码
@@ -238,11 +183,9 @@ set formatoptions+=mM
 set fenc=utf-8
 set fencs=utf-8,gbk
 set clipboard+=unnamed
-
 if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
 set ambiwidth=double
 endif
-
 if has("win32")
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
@@ -251,10 +194,8 @@ endif
 else
 echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
 endif
-
 " 让 Tohtml 产生有 CSS 语法的 html " syntax/2html.vim，可以用:runtime! syntax/2html.vim
 let html_use_css=1
-
 "hilight function name
 autocmd BufNewFile,BufRead * :syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
 autocmd BufNewFile,BufRead * :syntax match cfunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1
@@ -262,12 +203,10 @@ hi cfunctions ctermfg=100
 " Python 文件的一般设置，比如不要 tab 等
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType python map <F12> :!python %<CR>
-
 " 打开javascript折叠
 let b:javascript_fold=1
 " 打开javascript对dom、html和css的支持
 let javascript_enable_domhtmlcss=1
-
 "设置字典 ~/.vim/dict/文件的路径
 autocmd filetype javascript set dictionary=$VIMFILES/dict/javascript.dict
 autocmd filetype css set dictionary=$VIMFILES/dict/css.dict
