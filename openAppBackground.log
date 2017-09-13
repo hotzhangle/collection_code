@@ -1,0 +1,48 @@
+1	终端在后台打开程序用在所有命令后面输入: &
+2	firefox设置默认的浏览器，地址栏输入;about config:
+3	firefox定位地址栏的快捷键Ctrl + ,默认浏览器的设置输入browser.search.defaultenginename
+4	vim  I 光标回到行首，并执行insert操作
+5	android 源码目录external目录主要是android使用的开源模组
+6	:2,50 s/^\/\///g  在2~50行首添加//号 :%s/$/要插入的字符串 :1,$ s/^/HE/g
+7	dict -d gcide [word] 不带-d参数，会查询所有字典
+8	head 从文件头查看，tail从文件尾查看
+9	sudo blkid 这个命令查看uuid  之后修改/etc/fstab 文件可以修改挂载目录
+10	查看ubuntu版本号 uname -a
+11	修改密码 sudo passwd root
+12  设置所有方法不折叠	:set foldlevel=99
+13	awk命令举例：cat /etc/passwd |awk  -F ':'  'BEGIN {print "name,shell"}  {print $1","$7} END {print "blue,/bin/nosh"}'
+14	对于vim打开的多个文件:bn—下一个文件  :bp—上一个文件	使用同时显示多个文件:split	:vsplit
+15	/ 搜索时，n向下，N向上
+16	:161,170 normal   I// 对指定的行添加注释  normal可以执行任意的普通模式的命令，I会自动切换到插入模式，但是修改完成之后，vim会自动返回普通模式
+17	取消搜索后高亮用 :nohl 永久设置用:set nohlsearch
+18	:[range]s/pattern/string/[c,e,g,i]5.1  range	指的是範圍，1,7 指從第一行至第七行 patten 要替换的内容，可以用regrex表示，string是将要替换的字符串
+19	跳转局部变量的定义处用gD,C-] 跳转至函数或变量定义处,'' 跳转到光标上次停靠的地方, 是两个', 而不是一个"
+20	首先检查安装用which ctags,然后在源码的根目录下面执行ctags,例如 cd /media/code/0715_letv_smt/,然后执行ctags -R *,最后用Ctrl+] 跳转，用Ctrl+t返回
+21	分别更改这些配对标点符号中的文本内容ci’、ci”、ci(、ci[、ci{、ci< -	分别删除这些配对标点符号中的文本内容 di’、di”、di(或dib、di[、di{或diB、di< 分别复制这些配对标点符号中的文本内容 yi’、yi”、yi(、yi[、yi{、yi< - 分别选中这些配对标点符号中的文本内容 vi’、vi”、vi(、vi[、vi{、vi< -
+22	找出framework目录下面的所有python文件和bash shell文件，降序排列,并且只对行数大于100行的结果进行输出，并在结果中屏蔽总用量所在行	find frameworks/ -type f  -iname  "*.py" -o -iname "*.sh" |  xargs wc -l | sort -nr | awk -F ' ' '{ if($1>100){print $1"\t"$2} }'| sed '1d'		如果并将结果打成tar包，find frameworks/ -type f  -iname  "*.py" -o -iname "*.sh" |  xargs wc -l | sort -nr | awk -F ' ' '{ if($1>100){print $2} }'| sed  '1d' | xargs tar -cvf ~/share/shPy.tar，实测可行
+23	对于framework目录下面查找到的所有sh文件或者是py文件，如果文件的行数大于100行(删除总用量所在的行)，对于查找到的结果，拷贝到指定目录下	find frameworks/ -type f  -iname  "*.sh"  -o -iname "*.py"  |  xargs wc -l | sort -nr | awk -F ' ' '{ if($1>100){print $2} }'| sed  '1d' | xargs -i cp  {} /media/data/zhangle/study/temp/	实测可行 注意，如果对find查找到的结果进行拷贝的，这串命令中xargs 使用了-i参数
+24	vim删除指定行之间的内容，如	:10,30d将删除10到30行之间的内容
+25	复制光标所在的单词 yaw
+26	删除光标所在行到最后一行的所有内容	:,$d
+27	python 清除变量用 del
+28	替换行首空格，%s/^\s*//,%表示对整个文档执行替换,^表示行首,\s是空白字符，就是tab和空格
+29	正常模式下，用f 加一个参数是向后搜索一个字符,大写的F是向前搜，可以用 , 和 ; 来重复执行
+30	I 进入行首插入，输入"//",大写"V",进入可视模式，输入结尾的行号如，170G，选中区域，执行命令:noraml .	复制上一条命令在选中区域
+31 查找当前目录下最近一天内改动过的文件	find . -mtime 1 | xargs ls -al
+32	关键词自动完成，你有一个变量名为 iAmALongAndAwkwardVarName 在你写的代码的某个地方，你只需要输入开始几个字母（比如iAmAL），然后按<C-N>（按住Ctrl，再按N）或者<C-P>。如果VIM没有给出你想要的词，基本按，直到你满意为止，VIM会一直循环它找到的匹配的字符串。
+33	ubuntu 默认图片查看器的命令是eog
+34	find . -maxdepth 4 -type d -iname "ndk" | awk -F '/' '{print $2}' | sort -nr | uniq 最大深度4层查找ndk目录对应的工程，对结果去重复
+35	1) ls -lt  时间最近的在前面	2) ls -ltr 时间从前到后	3) 利用sort	 ls -l | sort +7 (日期为第8列)   时间从前到后	ls -l | sort -r +7      时间最近的在前面
+36	gsm.version 在vendor/google/product/gms.mk ro.com.google.gmsversion
+37	linux 提供了scp命名在不同的ftp之间拷贝
+38	cp -r参数是连子文件夹一起拷贝
+39	Carrier Client ID matrix for Android 这个是在联想的服务器里面有提供过的
+40	：9，15 move 16  或 :9,15 m 16 将第9行到第15行的文本内容到第16行的后面
+41 通过echo $RANDOM 可以在bash中获取随机数
+42 vimperator  键值GI配置ignorekeys,后面跟add,remove,list,clear参数
+43通过git stash list查看stash列表，从中选择你想要pop的stash，运行命令git stash pop stash@{id}或者 git stash apply stash@{id}
+44 ssh-keygen -t rsa -f ~/.ssh/xxx  generate public ssh key named by yourself
+45 vim 通过使用 . 命令来重复上次的命令
+46 subl Ctrl+K U 改为大写 Ctrl+K L 改为小写
+47 zip $V -qr "$TMP_ZIP" "$LEAF" unzip $Q "$BASE"   -d "$BASE_DIR"
+48	ssh-keygen -t rsa -C "zhangle@huaqin.com" letv公钥生成方式 ssh-keygen -t rsa -f ~/.ssh/xxx

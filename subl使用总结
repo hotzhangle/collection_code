@@ -1,0 +1,46 @@
+安装package control插件
+import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
+delete current line
+	ctrl+shift+k
+copy current line
+	ctrl+shift+d
+swap line up or down
+	ctrl+shift+up/down
+Reduced indentation
+	Ctrl + [可以减少缩进
+
+	adb shell am force-stop com.huaqin.runtime
+
+	sudo vim /etc/udev/rules.d/70-android.rules
+	加入以下内容，注意红色部分对应的就是lsusb得到的id
+	SUBSYSTEM=="usb", ATTRS{idVendor}=="1f3a", ATTRS{idProduct}=="1002",MODE="0666"
+
+	getevent -l /dev/input/event8  #bsp
+
+	cat {file_name} >> {file_name2}
+	就是把file_name 追加到 file_name2 ， file_name2会自动创建，以后会追加
+
+	http://blog.csdn.net/ljz2009y/article/details/22690935// on android strict mode
+
+Ctrl+L 选中整行，继续操作则继续选择下一行，效果和 Shift+↓ 效果一样。
+Ctrl+Shift+L 先选中多行，再按下快捷键，会在每行行尾插入光标，即可同时编辑这些行。
+Ctrl+Shift+[ 选中代码，按下快捷键，折叠代码。
+Ctrl+Shift+] 选中代码，按下快捷键，展开代码。
+Ctrl+← 向左单位性地移动光标，快速移动光标。
+Ctrl+→ 向右单位性地移动光标，快速移动光标。
+Ctrl+Shift+← 向左单位性地选中文本。
+Ctrl+Shift+→ 向右单位性地选中文本。
+Ctrl+Alt+↑ 向上添加多行光标，可同时编辑多行。
+Ctrl+Alt+↓ 向下添加多行光标，可同时编辑多行。
+
+Ctrl+J 合并选中的多行代码为一行。举个栗子：将多行格式的CSS属性合并为一行。
+Ctrl+Shift+D  复制光标所在整行，插入到下一行。
+Shift+Tab 向左缩进。
+Ctrl+X：删除当前行
+Ctrl+K+K 从光标处开始删除代码至行尾。
+Ctrl+K+U 转换大写。
+Ctrl+K+L 转换小写。
+Ctrl+Z 撤销。
+Ctrl+Y 恢复撤销。
+Ctrl+U 软撤销，感觉和 Gtrl+Z 一样。
+
