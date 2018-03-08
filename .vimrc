@@ -44,7 +44,7 @@ set background=dark
 "colorscheme molokai " 设定配色方案
 colorscheme solarized
 "colorscheme phd
-set number " 显示行号
+set relativenumber " 显示相对行号
 set showcmd "命令行显示输入的命令
 set showmode "命令行显示vim当前模式
 set ruler " Always show current position
