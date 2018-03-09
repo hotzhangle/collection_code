@@ -73,7 +73,7 @@ if has("gui_running")
     set guioptions-=b " 隐藏底部滚动条
     set showtabline=2 " 隐藏Tab栏
 endif
-"imap <C-v> <ESC>"+pa 
+"imap <C-v> <ESC>"+pa "去除了C-v的映射，避免占用块复制功能
 if (has("gui_running"))  
     colo molokai  
 else  
