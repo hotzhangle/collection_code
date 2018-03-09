@@ -1,10 +1,39 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " 一般设定 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""  
-syntax on           " 语法高亮  
+syntax on           " 语法高亮
+syntax enable "open syntax highlight  
+filetype off " 侦测文件类型 
+"=======for add plugin youcompleteme=========
+set rtp+=$VIM\vimfiles\bundle\vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'OnSyntaxChange'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-rails.git'
+Plugin 'rstacruz/sparkup',{'rtp':'vim/'}
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'gcmt/wildfire.vim'
+Plugin 'Mizuchi/STL-Syntax.git'
+Plugin 'nathanaelkane/vim-indent-guides.git'
+Plugin 'yegappan/grep.git'
+Plugin 'mileszs/ack.vim'
+Plugin 'dyng/ctrlsf.vim.git'
+Bundle 'ctrlp.vim'
+Bundle 'AutoClose'
+Bundle 'ZenCoding.vim'
+Bundle 'matchit.zip'
+Bundle '_jsbeautify'
+Bundle 'EasyMotion'
+Bundle 'FencView.vim'
+Bundle 'The-NERD-tree'
+Bundle 'The-NERD-Commenter'
+Plugin 'scrooloose/nerdcommenter'
+call vundle#end()
 behave mswin
-filetype on " 侦测文件类型 
-filetype plugin on " 载入文件类型插件 
 filetype indent on " 为特定文件类型载入相关缩进文件 
 set autochdir " 自动设置目录为正在编辑的文件所在的目录 
 set autoindent
@@ -20,8 +49,11 @@ set cmdheight=1     " 命令行（在状态行下）的高度，设置为1
 set completeopt=preview,menu,longest
 set confirm " 在处理未保存或只读文件的时候，弹出确认 
 set cursorline              " 突出显示当前行
+set cursorcolumn "突出显示当前列
+set so=7
 set encoding=utf-8          " 这里是配置vim内部信息的编码方式
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936 "设置编码语言
+set noundofile "noundofile
 set ffs=unix,dos,mac " favor unix ff, which behaves good under bot Winz & Linux  
 set fileencoding=utf-8
 set fileencodings=utf-8,gbk,chinese  "  这是是配置打开文件的编码方式组合
@@ -39,9 +71,9 @@ if has("gui_running")
     set guioptions-=L " 隐藏左侧滚动条
     set guioptions+=r " 隐藏右侧滚动条
     set guioptions-=b " 隐藏底部滚动条
-    set showtabline=0 " 隐藏Tab栏
+    set showtabline=2 " 隐藏Tab栏
 endif
-imap <C-v> <ESC>"+pa 
+"imap <C-v> <ESC>"+pa 
 if (has("gui_running"))  
     colo molokai  
 else  
@@ -71,6 +103,7 @@ set novisualbell    " 不要闪烁(不明白)
 set nocompatible "不要使用vi的键盘模式，而是vim自己的 
 set noexpandtab " 不要用空格代替制表符
 set noeb
+set relativenumber "显示相对行号
 set number " 显示行号
 set nobackup "禁止生成临时文件
 set noswapfile
@@ -82,6 +115,7 @@ set selection=exclusive
 set selectmode=mouse,key  
 set shiftwidth=4
 set showcmd         " 输入的命令显示出来，看的清楚些  
+set showmode 
 set showmatch  
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
 set smarttab " 在行和段开始处使用制表符
@@ -140,25 +174,65 @@ let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
 let Tlist_Ctags_Cmd='/usr/bin/ctags'  
 let g:winManagerWindowLayout='FileExplorer|TagList'  
 let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
-map <M-F2> :tabnew<CR>  "新建标签  
-map <C-F3> \be  "打开树状文件目录  
-map <F3> :tabnew .<CR>  
-map <F6> :call CompileRunGpp()<CR>  
-map <F8> :call RunPython()<CR>  
-map <CR><o>:browse confirm e<CR>
-nmap wm :WMToggle<cr>  
-nmap <c-s> :w<CR>  
-nnoremap <F2> :g/^\s*$/d<CR> "去空行  
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR> 
 nnoremap <C-F2> :vert diffsplit "比较文件  
-imap <c-s> <Esc>:w<CR>a
 setlocal noswapfile 
 source $VIMRUNTIME/delmenu.vim  
 source $VIMRUNTIME/menu.vim  
-vmap <C-c> "+yi 
-vmap <C-x> "+c 
-vmap <C-v> c<ESC>"+p 
 winpos 5 5          " 设定窗口位置  
+" --------------mapping-----------------------------
+"Set mapleader set mapleader must be ahead of all mapping action
+let mapleader = ";"
+let g:mapleader = ";"
+"Fast reloading of the .vimrc
+nmap <leader>ss :w!<cr>:source ~/.vimrc<cr>
+"Fast editing of .vimrc
+nmap <leader>ee :e! ~/.vimrc<cr>
+nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+nmap <leader>s :,s///g
+nmap <leader>p : set paste<CR>
+nmap <leader>pp :set nopaste<CR>
+map <silent> <leader><cr> :noh<cr>
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" Tab操作快捷方式!
+nnoremap <C-TAB> :tabnext<CR>
+nnoremap <C-S-TAB> :tabprev<CR>
+"关于tab的快捷键
+ map tn :tabnext<cr>
+ map tp :tabprevious<cr>
+ map td :tabnew .<cr>
+ map te :tabedit
+map tc :tabclose<cr>
+" F3 NERDTree 切换
+map <F3> :NERDTreeToggle<CR>
+imap <F3> <ESC>:NERDTreeToggle<CR>
+" plugin - matchit.vim 对%命令进行扩展使得能在嵌套标签和语句之间跳转" % 正向匹配 g% 反向匹配
+"窗口分割时,进行切换的按键热键需要连接两次,比如从下方窗口移动"光标到上方窗口,需要<c-w><c-w>k,非常麻烦,现在重映射为<c-k>,切换的"时候会变得非常方便.
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <silent><F4> :TlistToggle<CR>
+"一些不错的映射转换语法（如果在一个文件中混合了不同语言时有用）
+nnoremap <leader>1 :set filetype=xhtml<CR>
+nnoremap <leader>2 :set filetype=css<CR>
+nnoremap <leader>3 :set filetype=javascript<CR>
+nnoremap <leader>4 :set filetype=php<CR>
+" 选中状态下 Ctrl+c 复制
+vmap <C-c> "+y
+map <leader>da :DoxAuthor<CR>
+map <leader>df :Dox<CR>
+map <leader>db :DoxBlock<CR>
+map <leader>dc a /* */<LEFT><LEFT><LEFT>
+set fileformats=unix,dos,mac
+" nmap <leader>fd :se fileformat=dos<CR>
+" nmap <leader>fu :se fileformat=unix<CR>
+" use Ctrl+[l|n|p|cc] to list|next|previous|jump to count the result
+ map <C-x>l <ESC>:cl<CR>
+ map <C-x>n <ESC>:cn<CR>
+ map <C-x>p <ESC>:cp<CR>
+ map <C-x>c <ESC>:cc<CR>
+ "[% 定位块首 ]% 定位块尾
+" --------------mapping-----------------------------
 "colorscheme murphy
 """"""""""""""""""""""""""" 
 "定义函数SetTitle，自动插入文件头 
