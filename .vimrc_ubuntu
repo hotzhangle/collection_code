@@ -127,6 +127,7 @@ set showmode "命令行显示vim当前模式
 set ruler " Always show current position
 set cmdheight=2 " The commandbar is 2 high
 set cursorline " 突出显示当前行
+set cursorcolumn "突出显示当前列
 set colorcolumn=85 "设置85列限制
 set cursorcolumn "突出显示当前列
 set so=7 " Set 7 lines to the curors-when moving vertical
