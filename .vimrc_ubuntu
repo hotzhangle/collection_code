@@ -117,12 +117,14 @@ colorscheme molokai " 设定配色方案
 " colorscheme solarized
 "colorscheme phd
 set number " 显示行号
+set relativenumber "设置相对行号
 set showcmd "命令行显示输入的命令
 set showmode "命令行显示vim当前模式
 set ruler " Always show current position
 set cmdheight=2 " The commandbar is 2 high
 set cursorline " 突出显示当前行
 set cursorcolumn "突出显示当前列
+set colorcolumn=85
 set so=7 " Set 7 lines to the curors-when moving vertical
 set shiftwidth=4 " 设定\<\<和\>\>命令移动时的宽度为 4
 set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
@@ -387,7 +389,7 @@ autocmd filetype javascript set dictionary=$VIMFILES/dict/javascript.dict
 autocmd filetype css set dictionary=$VIMFILES/dict/css.dict
 autocmd filetype php set dictionary=$VIMFILES/dict/php.dict
 " 设置每行的宽度
-autocmd FileType * setlocal textwidth=80 formatoptions+=t
+autocmd FileType * setlocal textwidth=85 formatoptions+=t
 "-----------------------------------------------------------------
 " plugin - bufexplorer.vim Buffers切换
 let g:bufExplorerDefaultHelp=0 " Do not show default help.
