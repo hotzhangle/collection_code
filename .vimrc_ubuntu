@@ -52,10 +52,6 @@ Bundle 'SirVer/ultisnips'
 Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle "tomasr/molokai"                                                                                                                                                                                                         
-Bundle "altercation/vim-colors-solarized"                                               
-Bundle "fugalh/desert.vim"                                                              
-Bundle "endel/vim-github-colorscheme" 
 Bundle 'bronson/vim-trailing-whitespace'
 "auto complete matches begin
 Bundle 'Raimondi/delimitMate'
@@ -120,15 +116,12 @@ colorscheme molokai " 设定配色方案
 " colorscheme morning
 " colorscheme solarized
 "colorscheme phd
-set relativenumber "设置相对行号
 set number " 显示行号
 set showcmd "命令行显示输入的命令
 set showmode "命令行显示vim当前模式
 set ruler " Always show current position
 set cmdheight=2 " The commandbar is 2 high
 set cursorline " 突出显示当前行
-set cursorcolumn "突出显示当前列
-set colorcolumn=85 "设置85列限制
 set cursorcolumn "突出显示当前列
 set so=7 " Set 7 lines to the curors-when moving vertical
 set shiftwidth=4 " 设定\<\<和\>\>命令移动时的宽度为 4
@@ -201,6 +194,8 @@ nmap <leader>s :,s///gc
 nmap <leader>p : set paste<CR>
 nmap <leader>pp :set nopaste<CR>
 map <silent> <leader><cr> :noh<cr>
+map <silent> <leader>nnu :set nonumber norelativenumber<cr>                                                                                                                                                                   
+map <silent> <leader>nu :set number relativenumber<cr>
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap kj <Esc>
 " snippets expand key
@@ -300,6 +295,9 @@ highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
 highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
 highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
 highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+"highlight cursor                                                                       
+highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE                                                                                                                                             
+highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 
 "Visual mode pressing * or # searches for the current selection Super useful!From an idea by Michael Naumann " return OS type, eg: windows, or linux, mac, et.st..
 function! MySys()
