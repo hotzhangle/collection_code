@@ -52,6 +52,10 @@ Bundle 'SirVer/ultisnips'
 Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle "tomasr/molokai"                                                                                                                                                                                                         
+Bundle "altercation/vim-colors-solarized"                                               
+Bundle "fugalh/desert.vim"                                                              
+Bundle "endel/vim-github-colorscheme" 
 Bundle 'bronson/vim-trailing-whitespace'
 "auto complete matches begin
 Bundle 'Raimondi/delimitMate'
