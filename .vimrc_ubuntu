@@ -96,7 +96,8 @@ let g:UltiSnipsExpandTrigger="<C-S-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>" " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDirectories=['~/.vim/bundle/ultisnips/'] "设置ultisnips路径
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips' "设置ultisnips路径
+let g:UltiSnipsSnippetDirectories=['UltiSnips'] 
 "-------------------------------------------------------------------------------------------------
 "terryma/vim-multiple-cursors
 let g:multi_cursor_use_default_mapping=0
