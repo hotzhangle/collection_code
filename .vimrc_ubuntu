@@ -7,6 +7,8 @@ set nocompatible " 关闭 vi 兼容模式
 filetype off
 syntax on "	auto syntax on
 syntax enable "open syntax highlight
+"curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim  "about https://github.com/junegunn
 "=======for add plugin youcompleteme=========
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
