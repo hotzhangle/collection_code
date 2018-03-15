@@ -183,10 +183,14 @@ winpos 5 5          " 设定窗口位置
 "Set mapleader set mapleader must be ahead of all mapping action
 let mapleader = ";"
 let g:mapleader = ";"
-"Fast reloading of the .vimrc
-nmap <leader>ss :w!<cr>:source ~/.vimrc<cr>
-"Fast editing of .vimrc
-nmap <leader>ee :e! ~/.vimrc<cr>
+if has("gui-running")
+    nmap <leader>ss :w!<cr>:source $VIM/_vimrc<cr>
+    nmap <leader>ee :e! $VIM/_vimr<cr>
+else
+    nmap <leader>ss :w!<cr>:source ~/.vimrc<cr>
+    "Fast editing of .vimrc
+    nmap <leader>ee :e! ~/.vimrc<cr>
+endi
 nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 nmap <leader>s :,s///g
 nmap <leader>p : set paste<CR>
