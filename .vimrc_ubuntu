@@ -198,10 +198,14 @@ command W w !sudo tee % > /dev/null  " :W sudo saves the file (useful for handli
 "Set mapleader set mapleader must be ahead of all mapping action
 let mapleader = ";"
 let g:mapleader = ";"
-"Fast reloading of the .vimrc
-nmap <leader>ss :w!<cr>:source ~/.vimrc<cr>
-"Fast editing of .vimrc
-nmap <leader>ee :e! ~/.vimrc<cr>
+if has("win32")
+    nmap <leader>ss :w!<cr>:source $VIM/_vimrc<cr>
+    nmap <leader>ee :e! $VIM/_vimrc<cr>
+elseif has('unix')
+    nmap <leader>ss :w!<cr>:source ~/.vimrc<cr>
+    "Fast editing of .vimrc
+    nmap <leader>ee :e! ~/.vimrc<cr>
+endi
 nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 nmap <leader>s :,s///gc
 nmap <leader>p : set paste<CR>
