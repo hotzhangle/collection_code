@@ -144,7 +144,8 @@ set nowb " may means no white blank
 set guioptions=aAce "hide toolbar and scrollbar
 setlocal noswapfile " maybe means no need to generate swap file
 setlocal noundofile "forbiden to generate temp untracked file.
-set autochdir " 自动切换当前目录为当前文件所在的目录
+"为了更方便的发挥fzf的查找文件功能，停止这一设置
+"set autochdir " 自动切换当前目录为当前文件所在的目录 
 set autowrite "设置自动写入
 set backupcopy=yes " 设置备份时的行为为覆盖
 set ignorecase "ignore case in searches
@@ -520,12 +521,19 @@ execute "vimgrep " . w . " %"
 endfunction
 "---------------------------------------------------------------------------------------
 " Go to last file(s) if invoked without arguments.
-autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |
-    \ call mkdir($HOME . "/.vim") |
-    \ endif |
-    \ execute "mksession! " . $HOME . "/.vim/Session.vim"
-autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
-    \ execute "source " . $HOME . "/.vim/Session.vim"
+if has("gui_running")                                                                                                                                                                                                           
+    autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |                                     
+                \ call mkdir($HOME . "/.vim") |                                                        
+                \ endif |                                                                              
+                \ execute "mksession! " . $HOME . "/.vim/SessionGui.vim"                               
+    autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/SessionGui.vim") |         
+else                                                                                                   
+    autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |                                     
+                \ call mkdir($HOME . "/.vim") |                                                        
+                \ endif |                                                                              
+                \ execute "mksession! " . $HOME . "/.vim/Session.vim"                                  
+    autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |            
+endif  
 "###################    set comment start  #########################                                   
 func SetComment()                                                                                      
     call append(line(".")  , '// Techain modify for ID by zhangle at '.strftime("%Y-%m-%d %H:%M:%S").' start.')
