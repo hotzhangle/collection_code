@@ -314,3 +314,25 @@ let NERDTreeWinPos = "left" "where NERD tree window is placed on the screen
 let NERDTreeWinSize =  25 "size of the NERD tree  
 nmap <F8> <ESC>:NERDTreeToggle<RETURN>" Open and close the NERD_tree.vim separately
 """""""""""""""""""""""""""""""""""""""NERDTree plugin"""""""""""""""""""""""""""""""""""""""""
+" Go to last file(s) if invoked without arguments.
+if has("gui_running")                                                                                                                                                                                                           
+    autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |                                     
+                \ call mkdir($HOME . "/.vim") |                                                        
+                \ endif |                                                                              
+                \ execute "mksession! " . $HOME . "/.vim/SessionGui.vim"                               
+    autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/SessionGui.vim") |         
+else                                                                                                   
+    autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) |                                     
+                \ call mkdir($HOME . "/.vim") |                                                        
+                \ endif |                                                                              
+                \ execute "mksession! " . $HOME . "/.vim/Session.vim"                                  
+    autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |            
+endif  
+"###################    set comment start  #########################                                   
+func SetComment()                                                                                      
+    call append(line(".")  , '// Techain modify for ID by zhangle at '.strftime("%Y-%m-%d %H:%M:%S").' start.')
+    call append(line(".")+1  , '// Techain modify for ID by zhangle at '.strftime("%Y-%m-%d %H:%M:%S").' end.')
+endfunc
+nmap <leader><SPACE> :%s/ID//gc
+map <F11> : call SetComment()<CR>j<ESC>                                                                
+"###################    set comment end   ##########################
