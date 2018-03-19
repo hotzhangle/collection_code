@@ -1,0 +1,91 @@
+# https://www.jianshu.com/p/5982ccb87af0
+#################################################################################
+# 如果make执行时，有“-I”或“--include-dir”参数，
+# 那么make就会在这个参数所指定的目录下去寻找。
+#
+# 义头文件目录，链接库目录，链接文件
+# INCLUDE_PATH = -Iinclude
+#
+# LDFLAGS---相当于库所在路径，LIBS---要链接的库文件
+#
+# LDFLAGS += -L/lib
+# IB_PATH =-Llib -L/usr/local/lib/ -Lsrc/lib/
+#
+# LIBS += -ltest
+# LIBS = -lboost_thread -lboost_system -Llib #ljsoncpp
+#
+# HEADER_DIR = include
+#################################################################################
+# Makefile文件中的特殊变量“VPATH”就是完成这个功能的，如果没有指明这个变量，
+# make只会在当前的目录中去找寻依赖文件和目标文件。
+# VPATH += $(SRC_DIR)/base
+# VPATH += $(SRC_DIR)/data
+# $(shell mkdir -p "$(OUTPUT_DIR)/base")
+# $(shell mkdir -p "$(OUTPUT_DIR)/data")
+# Makefile中的命令是以tab键开头的
+	#(GXX) $(HEADER_DIR) $(OBJS) -o $(TARGET) $(LIBS) $(LDFLAGS) $(LIBS)
+	# $(GCC) $(CFLAGS) -c $< -o $@  中，
+		# $< 表示依赖集。
+		# $@ 表示目标集，编译命令一般情况下可以省略。
+		# $^ 指代所有前置条件，之间以空格分隔。比如，规则为 t: p1 p2，那么 $^ 就指代 p1 p2 。
+		# $? 指代比目标更新的所有前置条件，之间以空格分隔。比如，规则为 t: p1 p2，其中 p2 的时间戳比 t 新，$?就指代p2。
+		# $* 指代匹配符 % 匹配的部分，比如 %.txt 匹配 f1.txt 中的 f1 ，$* 就表示 f1。
+		# $(@D) 和 $(@F) 分别指向 $@ 的目录名和文件名。
+		# $(<D) 和 $(<F) 分别指向 $< 的目录名和文件名。
+	# 在Makefile中 $ 有特殊含义，如果要表示它的字面意思需要写两个 $，所以 Makefile 中的四个 $ 传给Shell变成两个 $，
+	# 而两个 $ 在Shell中表示当前进程的id，一般用它给临时文件起名，以保证文件名唯一。
+# 如果需要让上一条命令的结果应用到下一条，需要用分号分隔命令并保证命令处于同一行。
+# make会将整个makefile展开后，再决定变量的值。也就是说，变量的值展开是在最后, 使我们可以在最后才指定变量的值。
+	# x := XXX
+	# y := $(x)
+	# x := YYY
+# 在上例中，y的值将会是 XXX ，而不是 YYY了。
+# Makefile中的变量只会做一次展开，对于嵌套 Makefile， 不允许一个完整的 if-endif 语句跨越两个 Makefile。
+# 字符串处理函数
+# 	简单替换:$(subst from ,to ,text)
+# 	模式替换:$(patsubst pattern ,replacement ,text)
+# 	去空格函数:(strip string)
+# 	字符查找函数:(findstring find ,in)
+# 	返回符合的字符串:(filter pattern ...,text) #输入字符单词空格区分
+#   返回不符合的字符串:$(filter-out pattern ...,text)
+#   排序去重函数:$(sort list) #按字母顺序对序列（空格划分）进行排序，同时去除重复的词组, 返回按单个空格进行划分。
+#   字符串切片函数:word/wordlist/words/firstword/lastword
+#   	$(word   2,  foo bar baz)
+#   	$(wordlist 2, 3, foo bar baz)
+#   	$(words aa bb cc dd)
+#   	$(firstword foo bar)
+#   	$(lastword foo bar)
+#   文件名处理函数
+#   	$(dir names ...) #返回除去最后文件名的路径部分， 没有路径直接返回“./”
+#       $(notdir names ...)# 返回不包含目录的文件名
+#       $(suffix names ...)# 返回文件后缀（逆序第一个 . 后面字符串)
+#       $(basename names ...)# 去除后缀， 文件目录内的后缀（.）不包括
+#       $(addsuffix suffix, names ...)# 加后缀
+#       $(addprefix prefix, names ...) #加前缀
+#       $(join list1, list2)# 对应连接参数
+#       $(wildcard pattern ) # 获取工作目录下所有符合模式的文件
+#       $(realpath names ...) # 返回绝对路径， 不包含 . 或者 ..
+#       $(abspath names ...) # 返回绝对路径， 不包含 . 或者 ..
+# gcc -MM kvm_main.c kvm_main.o: kvm_main.c iodev.h coalesced_mmio.h async_pf.h
+# <-- 这句就可以加到 Makefile 中作为编译 kvm_main.o 的依赖关系
+# 默认执行 make 命令时, GNU make在当前目录下依次搜索下面3个文件 "GNUmakefile", "makefile", "Makefile"。
+# Makefile 中
+	# main : main.o
+		# gcc -o main main.o
+	#会自动变为:
+	# main : main.o
+		# gcc -o main main.o
+	# main.o: main.c    <-- main.o 这个目标是隐含生成的
+		# gcc -c main.c
+#隐含规则中的 命令变量 和 命令参数变量
+#	变量名 含义
+#	RM 	rm -f
+#	AR 	ar
+#	CC 	cc
+#	CXX	g++
+#	变量名 含义
+#	ARFLAGS 	AR命令的参数
+#	CFLAGS 	C语言编译器的参数
+#	CXXFLAGS 	C++语言编译器的参数
+#	CPPFLAGS  	C 预处理器参数。
+#	make的隐含规则数据库可以用make -p命令打印
