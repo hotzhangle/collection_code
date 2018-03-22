@@ -1,0 +1,33 @@
+[user]
+	name = zhangle
+	email = hotzhangle@hotmail.com
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[color]
+    ui = auto
+    status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+[review "diana.devops.letv.com"]
+	username = zhangle_w
+[review "gerrit.huaqin.com:8081"]
+	username = 22003304
+[diff]
+    tool = vimdiff
+[difftool "vimdiff"]
+    cmd = /usr/bin/vimdiff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+    prompt = false
+[merge]
+    tool = vimdiff
+[mergetool "vimdiff"]
+    cmd = /usr/bin/vimdiff \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+    trustExitCode = true
+[alias]
+	lg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
