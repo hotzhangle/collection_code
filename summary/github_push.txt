@@ -1,0 +1,15 @@
+cd ~
+mkdir ~/.ssh/
+#Edit your gitconfig file
+vim ~/.gitconfig
+#generate your public key
+ssh-keygen -C "your comments for this key" -f "your key file name" -t rsa -b 2048 #man ssh-keygen
+cd ~/.ssh/
+vi config
+	#replace your ssh-keygen filename with github_rsa
+	Host github.com
+	 HostName github.com
+	 User git
+	 IdentityFile ~/.ssh/github_rsa
+ssh -T git@github.com
+#add your ssh-keygen public key file content to server.
