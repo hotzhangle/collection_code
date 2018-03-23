@@ -1,0 +1,142 @@
+class Student(object):
+
+    @property
+    def birth(self):
+        return self._birth
+
+    @birth.setter
+    def birth(self, value):
+        self._birth = value
+
+    @property
+    def age(self):
+        return 2014 - self._birth
+
+Mixin的目的就是给一个类增加多个功能，这样，在设计类的时候，我们优先考虑通过多重继承来组合多个Mixin的功能，而不是设计多层次的复杂的继承关系。
+Python自带的很多库也使用了Mixin。举个例子，Python自带了TCPServer和UDPServer这两类网络服务，而要同时服务多个用户就必须使用多进程或多线程模型，这两种模型由ForkingMixin和ThreadingMixin提供。通过组合，我们就可以创造出合适的服务来。
+比如，编写一个多进程模式的TCP服务，定义如下：
+class MyTCPServer(TCPServer, ForkingMixin):
+    pass
+编写一个多线程模式的UDP服务，定义如下：
+class MyUDPServer(UDPServer, ThreadingMixin):
+    pass
+如果你打算搞一个更先进的协程模型，可以编写一个CoroutineMixin：
+class MyTCPServer(TCPServer, CoroutineMixin):
+    pass
+这样一来，我们不需要复杂而庞大的继承链，只要选择组合不同的类的功能，就可以快速构造出所需的子类。
+
+ass绑定方法：
+
+def set_score(self, score):
+     self.score = score
+
+	 Student.set_score = MethodType(set_score, None, Student)
+
+定制类比较难以理解，这里先给出例子
+class Fib(object):
+	def __init__（self):
+		self.a,self.b=0,1
+	def __iter__(self):
+		return self
+	def next(self):
+		self.a,self.b=self.b,self.a+self.b
+		if self.a > 10000:
+			raise StopIteration();
+		return self.a
+	def __getitem__(self,n):
+		if isinstance(n,int):
+			a,b=1,1
+			for x in range(n):
+				a,b = b,a+b
+			return a
+		if isinstance(n,slice):
+			start=n.start
+			stop=n.stop
+			a,b =1,1
+			L=[]
+			for x in range(stop):
+				if x>= start:
+					L.append(a)
+				a,b=b ,a+b
+			return L
+=============================================
+那么，怎么判断一个变量是对象还是函数呢？其实，更多的时候，我们需要判断一个对象是否能被调用，能被调用的对象就是一个Callable对象
+type()函数既可以返回一个对象的类型，又可以创建出新的类型，比如，我们可以通过type()函数创建出Hello类，而无需通过class Hello(object)...的定义：
+>>> def fn(self, name='world'): # 先定义函数
+...     print('Hello, %s.' % name)
+...
+>>> Hello = type('Hello', (object,), dict(hello=fn)) # 创建Hello class
+>>> h = Hello()
+>>> h.hello()
+Hello, world.
+>>> print(type(Hello))
+<type 'type'>
+>>> print(type(h))
+<class '__main__.Hello'>
+=============================================
+当我们写下__metaclass__ = ListMetaclass语句时，魔术就生效了，它指示Python解释器在创建MyList时，要通过ListMetaclass.__new__()来创建，在此，我们可以修改类的定义，比如，加上新的方法，然后，返回修改后的定义。
+__new__()方法接收到的参数依次是：
+当前准备创建的类的对象；类的名字；类继承的父类集合；类的方法集合。
+测试一下MyList是否可以调用add()方法：
+>>> L = MyList()
+>>> L.add(1)
+>>> L
+[1]
+而普通的list没有add()方法：
+=============================================
+不到100行代码，我们就通过metaclass实现了一个精简的ORM框架，完整的代码从这里下载：
+https://github.com/michaelliao/learn-python/blob/master/metaclass/simple_orm.py
+要获取详细的系统信息，可以调用uname()函数：
+在操作系统中定义的环境变量，全部保存在os.environ这个dict中，可以直接查看：
+要获取某个环境变量的值，可以调用os.getenv()函数：
+>>> os.getenv('PATH')
+>>> os.path.abspath('.')
+'/Users/michael'
+# 在某个目录下创建一个新目录，
+# 首先把新目录的完整路径表示出来:
+>>> os.path.join('/Users/michael', 'testdir')
+'/Users/michael/testdir'
+# 然后创建一个目录:
+>>> os.mkdir('/Users/michael/testdir')
+# 删掉一个目录:
+>>> os.rmdir('/Users/michael/testdir')
+os.path.splitext()可以直接让你得到文件扩展名，很多时候非常方便
+Python提供两个模块来实现序列化：cPickle和pickle。这两个模块功能是一样的，区别在于cPickle是C语言写的，速度快，pickle是纯Python写的，速度慢，跟cStringIO和StringIO一个道理。用的时候，先尝试导入cPickle，如果失败，再导入pickle
+当我们要把对象从磁盘读到内存时，可以先把内容读到一个str，然后用pickle.loads()方法反序列化出对象，也可以直接用pickle.load()方法从一个file-like Object中直接反序列化出对象。我们打开另一个Python命令行来反序列化刚才保存的对象：
+
+>>> f = open('dump.txt', 'rb')
+>>> d = pickle.load(f)
+>>> f.close()
+>>> d
+{'age': 20, 'score': 88, 'name': 'Bob'}
+Python内置的json模块提供了非常完善的Python对象到JSON格式的转换。我们先看看如何把Python对象变成一个JSON：
+>>> import json
+pickle.dumps()方法把任意对象序列化成一个str，然后，就可以把这个str写入文件。或者用另一个方法pickle.dump()直接把对象序列化后写入一个file-like Object：
+
+p = Pool()
+    p.apply_async(long_time_task, args=(i,))
+
+线程锁命令用Thread.acquire()	
+释放锁命令用Thread.release()
+
+多线程编程，模型复杂，容易发生冲突，必须用锁加以隔离，同时，又要小心死锁的发生。
+Python解释器由于设计时有GIL全局锁，导致了多线程无法利用多核。多线程的并发在Python中就是一个美丽的梦。
+
+Python的分布式进程接口简单，封装良好，适合需要把繁重任务分布到多台机器的环境下。
+注意Queue的作用是用来传递任务和接收结果，每个任务的描述数据量要尽量小。比如发送一个处理日志文件的任务，就不要发送几百兆的日志文件本身，而是发送日志文件存放的完整路径，由Worker进程再去共享的磁盘上读取文件。
+
+最后需要特别指出的是，正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。
+
+namedtuple是一个函数，它用来创建一个自定义的tuple对象，并且规定了tuple元素的个数，并可以用属性而不是索引来引用tuple的某个元素
+
+deque除了实现list的append()和pop()外，还支持appendleft()和popleft()，这样就可以非常高效地往头部添加或删除元素。
+
+使用dict时，如果引用的Key不存在，就会抛出KeyError。如果希望key不存在时，返回一个默认值，就可以用defaultdict	注意，OrderedDict的Key会按照插入的顺序排列，不是Key本身排序
+
+Counter是一个简单的计数器,Counter实际上也是dict的一个子类，上面的结果可以看出，字符'g'、'm'、'r'各出现了两次，其他字符各出现了一次。
+
+import hashlib
+md5 = hashlib.md5()
+sha1 = hashlib.sha1()
+
+
